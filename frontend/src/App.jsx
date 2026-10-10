@@ -4,7 +4,7 @@ import {
   XAxis, YAxis, Tooltip, ResponsiveContainer, Cell
 } from "recharts"
 
-const API = "http://localhost:8000"
+const API = import.meta.env.VITE_API_URL ?? "http://localhost:8000"
 const COLORS = { positive: "#4ade80", negative: "#f87171", neutral: "#94a3b8" }
 
 const COUNTRIES = [

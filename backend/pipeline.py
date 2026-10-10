@@ -1,14 +1,11 @@
-import os
 import re
 import requests
 import pandas as pd
 from datetime import datetime
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-from dotenv import load_dotenv
 
-load_dotenv()
+from settings import settings
 
-API_KEY = os.getenv("NEWS_API_KEY")
 analyzer = SentimentIntensityAnalyzer()
 
 STOPWORDS = {
@@ -53,7 +50,7 @@ def fetch_and_process(topic: str, country: str = None, category: str = None) -> 
         "language": "en",
         "sortBy": "publishedAt",
         "pageSize": 100,
-        "apiKey": API_KEY
+        "apiKey": settings.news_api_key
     }
     
     if country:

@@ -3,4 +3,4 @@ uvicorn
 requests
 pandas
 vaderSentiment
-python-dotenv
+pydantic-settings>=2.7.1
