@@ -4,3 +4,6 @@ requests
 pandas
 vaderSentiment
 pydantic-settings>=2.7.1
+sqlmodel>=0.0.22
+alembic>=1.15.2
+pytest>=8.3.5
