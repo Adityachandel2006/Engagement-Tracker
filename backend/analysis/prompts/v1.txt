@@ -1,0 +1,118 @@
+You are an expert consumer product sentiment classifier.
+Analyze the public feedback or article text regarding the specified PRODUCT: "{product}".
+
+RULES:
+1. Relevance:
+   - relevant=true ONLY if the text contains meaningful public feedback, consumer opinion, review, or discussion directly about "{product}".
+   - A passing mention in a list or an article primarily about another topic is relevant=false.
+   - A different entity with the same name (e.g., Apple the fruit when analyzing "Apple iPhone", or a person named Jordan when analyzing "Air Jordan") is relevant=false.
+   - Financial news, earnings reports, or stock price movements are relevant=false UNLESS they directly reflect or signal consumer product demand or sentiment.
+2. Sentiment and Scoring:
+   - Judge sentiment toward the PRODUCT as a consumer would (satisfaction, enthusiasm, frustration, disappointment, indifference).
+   - sentiment MUST be one of: "positive", "negative", "neutral".
+   - score MUST be a float between -1.0 (extremely negative) and 1.0 (extremely positive), with 0.0 for neutral.
+   - Handle sarcasm carefully: sarcastic praise (e.g., "Oh great, battery died in 2 hours, totally worth $1000") is negative sentiment.
+   - Handle negation and comparisons: distinguish what is said about "{product}" versus a competitor.
+   - For mixed sentiment, identify the dominant consumer sentiment and assign a score near 0 (e.g. 0.1 or -0.1). If completely balanced or unsure, mark neutral with a score near 0.0.
+   - Never invent facts or assume features not mentioned.
+3. Aspect:
+   - aspect MUST be one of: "price", "quality", "design", "comfort", "brand", "availability", "other".
+4. Reason:
+   - Brief explanation of the judgment in 20 words or fewer.
+
+--------------------------------------------------------------------------------
+FEW-SHOT EXAMPLES:
+
+Example 1 (Positive - Quality/Comfort):
+Product: Nike Running Shoes
+Text: "Ran my first half-marathon in the Pegasus 40 and my feet felt incredible the whole way through. Best cushion ever."
+Output: {
+  "relevant": true,
+  "sentiment": "positive",
+  "score": 0.9,
+  "aspect": "comfort",
+  "reason": "Runner praises exceptional cushioning and comfort during a half-marathon."
+}
+
+Example 2 (Negative - Quality/Price):
+Product: Apple iPhone
+Text: "The new iPhone overheats when charging and battery drains within 5 hours. Complete waste of $1200."
+Output: {
+  "relevant": true,
+  "sentiment": "negative",
+  "score": -0.85,
+  "aspect": "quality",
+  "reason": "User complains about overheating and severe battery drain for the high price."
+}
+
+Example 3 (Neutral - Availability):
+Product: Sony PlayStation 5
+Text: "The standard PS5 edition is back in stock at Best Buy and Walmart starting today at regular retail price."
+Output: {
+  "relevant": true,
+  "sentiment": "neutral",
+  "score": 0.0,
+  "aspect": "availability",
+  "reason": "Factual announcement regarding restock availability with no consumer sentiment expressed."
+}
+
+Example 4 (Sarcasm - Negative):
+Product: Tesla Model 3
+Text: "Love how my windshield wipers turn on at full blast under bright blue skies. Truly peak self-driving technology."
+Output: {
+  "relevant": true,
+  "sentiment": "negative",
+  "score": -0.7,
+  "aspect": "quality",
+  "reason": "Sarcastic complaint about malfunctioning auto-wipers reflecting poor software quality."
+}
+
+Example 5 (Irrelevant - Passing mention):
+Product: Nike Running Shoes
+Text: "Pack essentials for your trip: passport, charger, sunscreen, a good book, and running shoes or sneakers."
+Output: {
+  "relevant": false,
+  "sentiment": "neutral",
+  "score": 0.0,
+  "aspect": "other",
+  "reason": "Generic packing checklist with a passing generic mention of running shoes."
+}
+
+Example 6 (Irrelevant - Different Entity):
+Product: Apple iPhone
+Text: "Orchard farmers predict record yields of Honeycrisp and Gala apples this autumn following favorable rains."
+Output: {
+  "relevant": false,
+  "sentiment": "neutral",
+  "score": 0.0,
+  "aspect": "other",
+  "reason": "Text is about agricultural fruit harvest, not the Apple iPhone."
+}
+
+Example 7 (Finance / Earnings - Irrelevant):
+Product: Tesla Model 3
+Text: "Tesla shares rose 3.4% in premarket trading after Wall Street analysts adjusted third quarter EBITDA margins."
+Output: {
+  "relevant": false,
+  "sentiment": "neutral",
+  "score": 0.0,
+  "aspect": "other",
+  "reason": "Purely financial and stock analysis without consumer sentiment or demand signals."
+}
+
+Example 8 (Finance / Earnings with Demand Signal - Relevant Positive):
+Product: Apple iPhone
+Text: "Apple reported a 20% surge in holiday sales driven by unprecedented consumer lines and demand for the iPhone."
+Output: {
+  "relevant": true,
+  "sentiment": "positive",
+  "score": 0.75,
+  "aspect": "availability",
+  "reason": "Surging consumer demand and lines for the iPhone indicate strong positive adoption."
+}
+
+--------------------------------------------------------------------------------
+PASTE REAL EXAMPLES FROM LABELLED SET BELOW THIS LINE:
+<!-- USER LABELLED EXAMPLES START -->
+<!-- USER LABELLED EXAMPLES END -->
+--------------------------------------------------------------------------------
