@@ -1,0 +1,35 @@
+# Product aliases and blocklist for stage-1 relevance filtering.
+# Keys are lowercased product names.
+
+nike running shoes:
+  aliases:
+    - nike
+    - nike running
+    - nike shoes
+  blocklist: []
+
+apple iphone:
+  aliases:
+    - iphone
+    - apple iphone
+    - apple phone
+  blocklist:
+    - apple fruit
+    - apple cider
+    - apple pie
+    - apple orchard
+    - apple harvest
+
+tesla model 3:
+  aliases:
+    - tesla
+    - model 3
+    - tesla model3
+  blocklist: []
+
+samsung galaxy:
+  aliases:
+    - samsung
+    - galaxy phone
+    - galaxy s
+  blocklist: []
